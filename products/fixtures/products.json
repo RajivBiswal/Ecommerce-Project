@@ -1,0 +1,86 @@
+[
+{
+    "model": "products.myproduct",
+    "pk": 1,
+    "fields": {
+        "title": "Jeans Top",
+        "slug": "jeans-top",
+        "description": "Blue slim pure jeans jacket",
+        "price": "500.00",
+        "image": "products/135334376/135334376.jpg",
+        "featured": false
+    }
+},
+{
+    "model": "products.myproduct",
+    "pk": 2,
+    "fields": {
+        "title": "Yellow T-Shirt",
+        "slug": "yellow-t-shirt",
+        "description": "Full sleeve pure cotton yellow tshirt",
+        "price": "450.00",
+        "image": "products/3402352915/3402352915.jpg",
+        "featured": false
+    }
+},
+{
+    "model": "products.myproduct",
+    "pk": 3,
+    "fields": {
+        "title": "Black Vest",
+        "slug": "black-vest",
+        "description": "Graphic printed pure elastic black vest",
+        "price": "250.00",
+        "image": "products/1281815/1281815.jpg",
+        "featured": true
+    }
+},
+{
+    "model": "products.myproduct",
+    "pk": 4,
+    "fields": {
+        "title": "White Tshirt",
+        "slug": "tshirt",
+        "description": "Pure senthetic Half Sleeve White T shirt",
+        "price": "300.00",
+        "image": "products/883272551/883272551.jpg",
+        "featured": false
+    }
+},
+{
+    "model": "products.myproduct",
+    "pk": 5,
+    "fields": {
+        "title": "Shirt",
+        "slug": "shirt",
+        "description": "Pure cotton red checked Shirt.",
+        "price": "700.00",
+        "image": "products/3520676995/3520676995.png",
+        "featured": false
+    }
+},
+{
+    "model": "products.myproduct",
+    "pk": 6,
+    "fields": {
+        "title": "Jeans",
+        "slug": "jeans",
+        "description": "Denim full elastic slim jeans",
+        "price": "1200.00",
+        "image": "products/2545902404/2545902404.jpg",
+        "featured": false
+    }
+},
+{
+    "model": "products.myproduct",
+    "pk": 7,
+    "fields": {
+        "title": "Shoes",
+        "slug": "shoes",
+        "description": "White Sports shoes.It's light weight comfortable to wear.",
+        "price": "1500.00",
+        "image": "products/136069294/136069294.jpg",
+        "featured": false
+    }
+}
+]
