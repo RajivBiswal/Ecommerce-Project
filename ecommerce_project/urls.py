@@ -35,6 +35,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('checkout/address/create/', checkout_address_create, name='checkout_address_create'),
     path('checkout/address/reuse/', checkout_address_reuse, name='checkout_address_reuse'),
+    path('billing/', include('billing.urls',namespace='billing')),
 
 ]
 if settings.DEBUG:

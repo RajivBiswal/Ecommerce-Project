@@ -18,7 +18,7 @@ class ProductListView(generic.ListView):
         return models.MyProduct.objects.all()
 
 
-class ProductSlugDetailView(ObjectViewedMixin, generic.DetailView):
+class ProductSlugDetailView(generic.DetailView):        #ObjectViewedMixin also use
     """Using for slug field"""
     queryset = models.MyProduct.objects.all()
     template_name = 'products/detail.html'
