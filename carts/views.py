@@ -92,12 +92,17 @@ def checkout_home(request):
     if request.method == 'POST':
         """check if there is a order and its paid then delete the session cart__id
             and redirect to some success page"""
-        is_done = order_obj.check_done()
-        if is_done:
-            order_obj.check_paid()
-            del request.session['cart_id']
-            request.session['total_items'] = 0
-            return redirect('carts:success')
+        is_prepared = order_obj.check_done()
+        if is_prepared:
+            did_chage, charge_msg = billing_profile.charge(order_obj)
+            if did_chage:
+                order_obj.check_paid()
+                del request.session['cart_id']
+                request.session['total_items'] = 0
+                return redirect('carts:success')
+            else:
+                print(charge_msg)
+                return redirect('carts:checkout')
 
     context = {
         "object": order_obj,

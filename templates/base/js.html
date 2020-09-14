@@ -15,6 +15,9 @@
 <!-- Custom Js -->
 <script src="{% static "js/main.js" %}"></script>
 
+<!-- Custom card Js -->
+<script src="{% static "js/stripe_card.js" %}"></script>
+
 <!-- Django Secure AJAX -->
 <script src="{% static "js/csrf_ajax.js" %}"></script>
 
@@ -23,3 +26,4 @@
 
 <!-- JS render -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.7/jsrender.min.js"></script>
+{% include "base/stripe_js.html" %}
