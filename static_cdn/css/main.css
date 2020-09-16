@@ -1,0 +1,17 @@
+.leftdiv{
+  height:200px;
+  width:50%;
+  background-color:gray;
+  float:left;
+  margin:2px;
+  display: inline-block;
+  }
+
+.rightdiv{
+   height:200px;
+   width:50%;
+   background-color:yellow;
+   float:left;
+   display: inline-block;
+   margin:2px;
+  }

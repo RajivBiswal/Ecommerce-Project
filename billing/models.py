@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.db.models.signals import post_save,pre_save
-
+from django.urls import reverse_lazy
 
 from accounts.models import GuestModel
 User = settings.AUTH_USER_MODEL
@@ -49,7 +49,36 @@ class BillingProfile(models.Model):
         return self.email
 
     def charge(self, order_obj, card=None):
+        """creating a charge for a billing"""
         return Charge.objects.create_charge(self, order_obj, card)
+
+    def get_card(self):
+        """getting the card"""
+        return self.card_set.all()  #since we overriding all method now it  also filter active value along with billing profile
+
+    @property
+    def has_card(self):
+        """check whether card exists"""
+        card_qs = self.get_card()
+        return card_qs.exists() #return true or false
+
+    @property
+    def default_card(self):
+        """check if cards are availabe for the profile then return the first
+        card as default card"""
+        default_cards = self.get_card().filter(default=True, active=True)
+        if default_cards:
+            return default_cards.first()
+        return None
+
+    def set_cards_inactive(self):
+        """Inactive card after checkout for guest user"""
+        card_qs = self.get_card()
+        card_qs.update(active=False)
+        return card_qs.filter(active=True).count()
+
+    def get_payment_method_url(self):
+        return reverse_lazy('billing:payment_method')
 
 def user_created_receiver(sender, instance, created, *args, **kwargs):
     if created and instance.email:
@@ -70,8 +99,18 @@ pre_save.connect(billing_profile_created_receiver, sender=BillingProfile)
 
 
 class CardManager(models.Manager):
-    def add_new(self, billing_profile, card_response):
-        if str(card_response.object) == 'card':
+
+    def all(self,*args,**kwargs):
+        """overriding the all method with a filter of active value"""
+        return self.get_queryset().filter(active=True)
+
+    def add_new(self, billing_profile, token):
+        """Add newcard if not exists"""
+        if token:
+            card_response = stripe.Customer.create_source(
+                              billing_profile.customer_id,
+                              source=token)
+
             new_card = self.model(
                 billing_profile = billing_profile,
                 stripe_id       = card_response.id,
@@ -97,13 +136,21 @@ class Card(models.Model):
     exp_year             = models.IntegerField(null=True,blank=True)
     last4                = models.CharField(max_length=4,null=True,blank=True)
     default              = models.BooleanField(default=True)
+    active               = models.BooleanField(default=True)
+    timestamp            = models.DateTimeField(auto_now_add=True)
 
     objects = CardManager()
 
     def __str__(self):
         return "{} {}".format(self.brand, self.last4)
 
+def new_card_post_save_receiver(sender, instance, *args, **kwargs):
+    if instance.default:
+        billing_profile = instance.billing_profile
+        qs = Card.objects.filter(billing_profile=billing_profile).exclude(pk=instance.pk)
+        qs.update(default=False)
 
+post_save.connect(new_card_post_save_receiver, sender=Card)
 
 class ChargeManager(models.Manager):
     def create_charge(self,billing_profile, order_obj, card=None):

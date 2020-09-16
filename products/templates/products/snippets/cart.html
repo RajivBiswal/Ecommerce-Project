@@ -1,0 +1,13 @@
+  <div class="cart" style="width: 18rem;">
+    {% if instance.image %}
+      <a href="{{instance.get_absolute_url}}"><img src="{{instance.image.url}}"
+        class="cart-img-top" alt="{{instance.title}} logo" height="300" width="300">
+      </a>
+    {% endif %}
+    <div class="cart-body">
+      <h5 class="cart-title">{{instance.title}}</h5>
+      <h4 class="cart-price">₹ {{instance.price}}/-</h4>
+      <p class="cart-text">{{instance.description}}</p>
+
+    </div>
+  </div>

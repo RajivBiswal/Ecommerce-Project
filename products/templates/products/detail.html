@@ -1,13 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {{object.title}} <br/>
-  {{object.description}}
-  {% if object.image %}
-    <img src="{{object.image.url}}" class="img-fluid" width="200" height="200"/>
-  {% endif %}
+<div class="detail">
 
-<div class="col-12 col-md-6">
-  {% include "products/snippets/update-cart.html" with product=object cart=cart%}
+  <div class="leftdiv col-4-12">
+    <div class="col-12-12">
+      {% if object.image %}
+        <img src="{{object.image.url}}" class="img-fluid" width="300" height="300"/>
+      {% endif %}
+    </div>
+    <div class="col-12-12 my-3">
+      {% include "products/snippets/update-cart.html" with product=object cart=cart%}
+    </div>
+  </div>
+
+  <div class="rightdiv col-8-12">
+    <div class="col-12-12">
+      <h4><b>{{object.title}}</b></h4> <br/>
+    </div>
+    <div class="col-12-12">
+      <h3>₹ {{object.price}}/-</h3>
+    </div>
+    <div class="col-12-12">
+      <h5>Details</h5>
+      {{object.description}}
+    </div>
+  </div>
 </div>
 {% endblock %}
